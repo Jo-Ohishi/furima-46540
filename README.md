@@ -15,40 +15,31 @@
 
 ## items テーブル
 
-| Column              | Type    | Options     |
-| ------------------- | ------- | ----------- |
-| item_image          | string  | null: false |
-| item_name           | string  | null: false |
-| description         | text    | null: false |
-| price               | integer | null: false |
-| category            | string  | null: false |
-| condition           | string  | null: false |
-| shipping_fee_payer  | string  | null: false |
-| shipping_prefecture | string  | null: false |
-| shipping_days       | string  | null: false |
-| seller_id           | references | null: false, foreign_key: true |
+| Column                 | Type    | Options     |
+| ---------------------- | ------- | ----------- |
+| item_name              | string  | null: false |
+| description            | text    | null: false |
+| price_id               | integer | null: false |
+| category_id            | integer | null: false |
+| condition_id           | integer | null: false |
+| shipping_fee_payer_id  | integer | null: false |
+| shipping_prefecture_id | integer | null: false |
+| shipping_days_id       | integer | null: false |
+| user                   | references | null: false, foreign_key: true |
 
 
-## comments テーブル
-
-| Column       | Type       | 
-Options                                |
-| ------       | ------     | ------------------------------ |
-| content      | text       | null: false |
-| items_id     | references | null: false, foreign_key: true |
-| user_id      | references | null: false, foreign_key: true |
 
 ## shipping_addresses　テーブル
 
-| Column              | Type    | Options     |
-| ------------------- | ------- | ----------- |
-| postal_code         | string  | null: false |
-| prefecture          | string  | null: false |
-| city                | string  | null: false |
-| street_address      | string  | null: false |
-| building_name       | string  | null: false |
-| phone_number        | string  | null: false |
-| purchases_id        | references | null: false, foreign_key: true |
+| Column              | Type       | Options     |
+| ------------------- | ---------- | ----------- |
+| postal_code         | string     | null: false |
+| prefecture_id       | integer    | null: false |
+| city                | string     | null: false |
+| street_address      | string     | null: false |
+| building_name       | string     | null: false |
+| phone_number        | string     | null: false |
+| purchases           | references | null: false, foreign_key: true |
 
 
 
@@ -56,7 +47,6 @@ Options                                |
 
 | Column              | Type       | Options     |
 | ------------------- | -------    | ----------- |
-| items_id            | references | null: false, foreign_key: true |
-| buyer_id            | references | null: false, foreign_key: true |
-| shipping_address_id | references | null: false, foreign_key: true |
+| items               | references | null: false, foreign_key: true |
+| user                | references | null: false, foreign_key: true |
 
