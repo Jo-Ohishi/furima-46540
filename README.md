@@ -13,21 +13,25 @@
 | first_name_kana    | string | null: false |
 | birth_date         | date   | null: false |
 
+has_many items
+has_many purchases
+
 ## items テーブル
 
 | Column                 | Type    | Options     |
 | ---------------------- | ------- | ----------- |
 | item_name              | string  | null: false |
 | description            | text    | null: false |
-| price_id               | integer | null: false |
+| price                  | integer | null: false |
 | category_id            | integer | null: false |
 | condition_id           | integer | null: false |
 | shipping_fee_payer_id  | integer | null: false |
-| shipping_prefecture_id | integer | null: false |
-| shipping_days_id       | integer | null: false |
+| prefecture_id          | integer | null: false |
+| shipping_day_id        | integer | null: false |
 | user                   | references | null: false, foreign_key: true |
 
-
+belongs_to user
+has_one purchase
 
 ## shipping_addresses　テーブル
 
@@ -37,16 +41,20 @@
 | prefecture_id       | integer    | null: false |
 | city                | string     | null: false |
 | street_address      | string     | null: false |
-| building_name       | string     | null: false |
+| building_name       | string     | null: true  |
 | phone_number        | string     | null: false |
-| purchases           | references | null: false, foreign_key: true |
+| purchase            | references | null: false, foreign_key: true |
 
-
+belongs_to user
+has_many purchases
 
 ## 　purchases テーブル
 
 | Column              | Type       | Options     |
 | ------------------- | -------    | ----------- |
-| items               | references | null: false, foreign_key: true |
+| item                | references | null: false, foreign_key: true |
 | user                | references | null: false, foreign_key: true |
 
+belongs_to item
+belongs_to user
+has_one shipping_address
