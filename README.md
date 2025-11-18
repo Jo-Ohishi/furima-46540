@@ -45,8 +45,7 @@ has_one purchase
 | phone_number        | string     | null: false |
 | purchase            | references | null: false, foreign_key: true |
 
-belongs_to user
-has_many purchases
+belongs_to purchase
 
 ## 　purchases テーブル
 
