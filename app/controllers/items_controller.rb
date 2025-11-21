@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
+    @items = Item.order('created_at DESC')
   end
 
   def new
@@ -24,7 +25,7 @@ class ItemsController < ApplicationController
   def item_params
     # フォームから送られてきたデータ（ストロングパラメーター）
     params.require(:item).permit(
-      :name_name, :description, :price,
+      :item_name, :description, :price,
       :category_id, :condition_id, :shipping_fee_payer_id,
       :prefecture_id, :shipping_day_id
     ).merge(user_id: current_user.id) # ログインユーザーIDを紐づける
