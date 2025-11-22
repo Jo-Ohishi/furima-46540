@@ -18,7 +18,7 @@ class Item < ApplicationRecord
   }
 
   validates :name, presence: true
-  validates :info, presence: true
+  validates :description, presence: true
   validates :image, presence: true
 
   validates :category_id, numericality: { other_than: 1, message: 'を選択してください' }

@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
   def item_params
     # フォームから送られてきたデータ（ストロングパラメーター）
     params.require(:item).permit(
-      :item_name, :description, :price,
+      :name, :description, :price,
       :category_id, :condition_id, :shipping_fee_payer_id,
       :prefecture_id, :shipping_day_id
     ).merge(user_id: current_user.id) # ログインユーザーIDを紐づける

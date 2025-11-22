@@ -20,7 +20,7 @@ has_many purchases
 
 | Column                 | Type    | Options     |
 | ---------------------- | ------- | ----------- |
-| item_name              | string  | null: false |
+| name              | string  | null: false |
 | description            | text    | null: false |
 | price                  | integer | null: false |
 | category_id            | integer | null: false |
