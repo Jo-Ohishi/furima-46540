@@ -1,7 +1,4 @@
 class ItemsController < ApplicationController
-<<<<<<< Updated upstream
-  def index
-=======
   before_action :authenticate_user!, only: [:new, :create]
   before_action :find_item, only: [:show]
 
@@ -34,7 +31,6 @@ class ItemsController < ApplicationController
       :category_id, :condition_id, :shipping_fee_payer_id,
       :prefecture_id, :shipping_day_id
     ).merge(user_id: current_user.id) # ログインユーザーIDを紐づける
->>>>>>> Stashed changes
   end
 
   def find_item
