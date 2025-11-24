@@ -4,16 +4,18 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= item.name %>
+      <%= @item.name %>
     </h2>
     <div class="item-img-content">
+      <% if @item.image.attached? %>
       <%= image_tag "item-sample.png" ,class:"item-box-img" %>
+      <% end %>
       <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <% if item.order.present? %>
+      <%# if item.order.present? %>
       <div class="sold-out">
         <span>Sold Out!!</span>
       </div>
-      <% end %>
+      <%# end %>
       <%# //商品が売れている場合は、sold outを表示しましょう %>
     </div>
     <div class="item-price-box">
@@ -21,23 +23,48 @@
         ¥ 999,999,999
       </span>
       <span class="item-postage">
-        <%= item.shipping_fee_payer.name %>
+        <%= @item.shipping_fee_payer.name %>
       </span>
     </div>
 
-    <%# ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>
+    <%# 💡 【大前提のチェック】ボタンを表示する前に、商品が売り切れていないか確認 %>
+    <% if @item.order.present? %>
+  
+     <%# 売り切れの場合は「Sold Out」の表示のみを行い、ボタンは表示しない %>
+     <div class="item-status">
+      <span class="sold-out-status">SOLD OUT</span>
+     </div>
 
-    <%= link_to "商品の編集", "#", method: :get, class: "item-red-btn" %>
-    <p class="or-text">or</p>
-    <%= link_to "削除", "#", data: {turbo_method: :delete}, class:"item-destroy" %>
+    <% else %>
+  
+       <%# 💡 【販売中】の場合の処理 %>
+  
+     <% if user_signed_in? %>
+    
+      <%# 1. ログイン状態の場合の処理 %>
+    
+      <% if current_user.id == @item.user_id %>
+      
+       <%# 1A. ログインユーザーが出品者本人（編集・削除ボタンを表示） %>
+       <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
+       <p class="or-text">or</p>
+       <%= link_to "削除", item_path(@item), data: {turbo_method: :delete, turbo_confirm: }, class:"item-destroy" %>
 
+      <%else %>
+      
+       <%# 1B. ログインユーザーが別人（購入ボタンを表示） %>
+       <%= link_to "購入画面に進む", item_orders_path(@item) ,class:"item-red-btn"%>
+      
+      <% end %>
 
-    <%# 商品が売れていない場合はこちらを表示しましょう %>
-    <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
-    <%# //商品が売れていない場合はこちらを表示しましょう %>
+     <% else %>
+    
+       <%# 2. ログアウト状態の場合の処理 (ボタンは何も表示しない) %>
+       <p class="login-prompt">購入にはログインが必要です。</p>
 
-
-    <%# //ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>
+     <% end %>
+  
+    <% end %>
 
     <div class="item-explain-box">
       <span><%= "商品説明" %></span>
@@ -46,7 +73,7 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= @item.nickname %></td>
+          <td class="detail-value"><%= @item.user.nickname %></td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
