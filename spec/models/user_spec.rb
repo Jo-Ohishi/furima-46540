@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  # 💡 let(:user) で有効なデータを生成（テストごとに新しいインスタンスが作られる）
+  # (FactoryBotで定義された :user ファクトリが必要です)
   let(:user) { FactoryBot.build(:user) }
 
   describe 'ユーザー登録のバリデーション' do
     ## 🧪 正常系のテスト
     context '登録できる場合' do
       it 'すべての要件を満たしている場合、登録できること' do
-        # userインスタンスがDBに保存できる（有効である）ことを検証
         expect(user).to be_valid
       end
     end
@@ -21,23 +20,23 @@ RSpec.describe User, type: :model do
       it 'メールアドレスが空では登録できないこと（必須）' do
         user.email = ''
         user.valid?
-        expect(user.errors.full_messages).to include('Eメールを入力してください')
-      end
+        # 💡 修正1: エラーメッセージを追加し、expectを完了
+        expect(user.errors.full_messages).to include('Email can\'t be blank')
+      end # 💡 修正1: it ブロックを閉じます
 
       it '重複したメールアドレスでは登録できないこと（一意性）' do
         # 既に有効なユーザーをDBに保存
         user.save
         # DBに保存されたユーザーと同じemailを持つインスタンスを作成
         user_duplicate = FactoryBot.build(:user, email: user.email)
-
         user_duplicate.valid?
-        expect(user_duplicate.errors.full_messages).to include('Eメールはすでに存在します')
+        expect(user_duplicate.errors.full_messages).to include('Email has already been taken')
       end
 
       it 'メールアドレスに@が含まれていない場合、登録できないこと' do
-        user.email = 'testuser.com'
+        user.email = 'testuser.nodomaincom' # @を含まない値
         user.valid?
-        expect(user.errors.full_messages).to include('Eメールは不正な値です')
+        expect(user.errors.full_messages).to include('Email is invalid')
       end
 
       # ----------------------------------------------------
@@ -46,21 +45,22 @@ RSpec.describe User, type: :model do
       it 'パスワードが空では登録できないこと（必須）' do
         user.password = ''
         user.valid?
-        expect(user.errors.full_messages).to include('パスワードを入力してください')
+        # 💡 修正2: 複数のメッセージをカンマ区切りで渡す
+        expect(user.errors.full_messages).to include('Password can\'t be blank', 'Password confirmation doesn\'t match Password')
       end
 
       it 'パスワードが5文字以下では登録できないこと（6文字以上が必須）' do
         user.password = '12345'
         user.password_confirmation = '12345'
         user.valid?
-        expect(user.errors.full_messages).to include('パスワードは6文字以上で入力してください')
+        expect(user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
 
-      it 'パスワードと確認用の値が一致しないと登録できないこと' do
+      it 'パスワードとパスワード（確認）の値が一致しないと登録できないこと' do
         user.password = 'password123'
-        user.password_confirmation = 'password456'
+        user.password_confirmation = 'password456' # 異なる値
         user.valid?
-        expect(user.errors.full_messages).to include('パスワード（確認用）とパスワードの入力が一致しません')
+        expect(user.errors.full_messages).to include('Password confirmation doesn\'t match Password')
       end
     end
   end

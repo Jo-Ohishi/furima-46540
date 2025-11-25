@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :user do
     # 💡 Deviseの必須項目
     nickname              { Faker::Name.last_name }
-    email                 { Faker::Internet.email }
+    email                 { |n| "test#{n}@example.com" }
     # パスワードは6文字以上、英数字混合の要件を満たすよう設定
     password              { 'a1' + Faker::Internet.password(min_length: 6) }
     password_confirmation { password }
