@@ -2,8 +2,8 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_item, only: [:show]
-  before_action :ensure_seller_and_unsold, only: [:edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_seller_and_unsold, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.order('created_at DESC')
@@ -69,7 +69,7 @@ class ItemsController < ApplicationController
   end
 
   def ensure_seller_and_unsold
-    # 1. ログインユーザーと出品者が同一人物かチェック
+    # 1.ログインユーザーと出品者が同一人物かチェック
     unless current_user == @item.user
       redirect_to root_path
       return # 処理を中断

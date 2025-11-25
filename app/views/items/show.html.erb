@@ -28,14 +28,14 @@
     </div>
 
     <%# 💡 【大前提のチェック】ボタンを表示する前に、商品が売り切れていないか確認 %>
-    <% if @item.order.present? %>
+    <%# if @item.order.present? %>
   
      <%# 売り切れの場合は「Sold Out」の表示のみを行い、ボタンは表示しない %>
      <div class="item-status">
       <span class="sold-out-status">SOLD OUT</span>
      </div>
 
-    <% else %>
+    <%# else %>
   
        <%# 💡 【販売中】の場合の処理 %>
   
@@ -48,7 +48,7 @@
        <%# 1A. ログインユーザーが出品者本人（編集・削除ボタンを表示） %>
        <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
        <p class="or-text">or</p>
-       <%= link_to "削除", item_path(@item), data: {turbo_method: :delete, turbo_confirm: }, class:"item-destroy" %>
+       <%= link_to "削除", item_path(@item), data: {turbo_method: :delete, }, class:"item-destroy" %>
 
       <%else %>
       
@@ -64,7 +64,7 @@
 
      <% end %>
   
-    <% end %>
+    <%# end %>
 
     <div class="item-explain-box">
       <span><%= "商品説明" %></span>
