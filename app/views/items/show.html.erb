@@ -1,7 +1,7 @@
 <%= render "shared/header" %>
 
 <%# 商品の概要 %>
-<div class="item-show">
+<%#div class="item-show"%>
   <div class="item-box">
     <h2 class="name">
       <%= @item.name %>
@@ -127,6 +127,6 @@
   <%# 詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
   <a href="<%= category_items_path(@item.category) %>" class="another-item"><%= @item.category.name %>をもっと見る</a>
   <%# //詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
-</div>
+<%#/div%>
 
 <%= render "shared/footer" %>
