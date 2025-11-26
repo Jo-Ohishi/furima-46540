@@ -6,7 +6,7 @@
 | ------------------ | ------ | ----------- |
 | nickname           | string | null: false |
 | email              | string | null: false, unique: true |
-| encrypted_password | string | null: false |
+| encrypted_password| string | null: false |
 | last_name          | string | null: false |
 | first_name         | string | null: false |
 | last_name_kana     | string | null: false |
@@ -20,7 +20,7 @@ has_many purchases
 
 | Column                 | Type    | Options     |
 | ---------------------- | ------- | ----------- |
-| item_name              | string  | null: false |
+| name              | string  | null: false |
 | description            | text    | null: false |
 | price                  | integer | null: false |
 | category_id            | integer | null: false |
