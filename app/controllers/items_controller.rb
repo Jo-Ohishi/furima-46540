@@ -5,9 +5,9 @@
 #   before_action :set_item, only: [:show, :edit, :update, :destroy]
 #   before_action :ensure_seller_and_unsold, only: [:edit, :update, :destroy]
 
-#   def index
-#     @items = Item.order('created_at DESC')
-#   end
+def index
+  # @items = Item.order('created_at DESC')
+end
 
 #   def new
 #     @item = Item.new
