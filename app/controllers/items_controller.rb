@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   before_action :ensure_seller_and_unsold, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.order('created_at DESC')
+    @items = Item.all.order('created_at DESC')
   end
 
   def new
