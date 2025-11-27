@@ -21,9 +21,9 @@ class ItemsController < ApplicationController
     end
   end
 
-  # def show
-  #   @item = Item.find(params[:id])
-  # end
+  def show
+    @item = Item.find(params[:id])
+  end
 
   # def edit
   # end
@@ -51,15 +51,15 @@ class ItemsController < ApplicationController
     ).merge(user_id: current_user.id)
   end
 
-  # def find_item
-  #   @item = Item.find(params[:id])
-  # rescue ActiveRecord::RecordNotFound
-  #   redirect_to root_path
-  # end
+  def find_item
+    @item = Item.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
+  end
 
-  # def set_item
-  #   @item = Item.find(params[:id])
-  # end
+  def set_item
+    @item = Item.find(params[:id])
+  end
 
   # def ensure_seller_and_unsold
   #   unless current_user == @item.user
