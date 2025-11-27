@@ -5,7 +5,7 @@ RSpec.describe Item, type: :model do
   let!(:item) { FactoryBot.build(:item) }
 
   # --- 正常系テスト ---
-  describe '商品出品' do
+  context '商品が出品できる場合' do
     it 'すべての必須項目が正しく入力されていれば登録できる' do
       # FactoryBotで生成された有効な@itemの検証
       expect(item).to be_valid
@@ -13,7 +13,7 @@ RSpec.describe Item, type: :model do
   end
 
   # --- 必須項目（presence）のバリデーション ---
-  describe '商品情報の必須チェック' do
+  context '商品情報の必須チェック' do
     it '価格(price)が空だと登録できない' do
       item.price = nil
       item.valid?
@@ -41,7 +41,7 @@ RSpec.describe Item, type: :model do
   end
 
   # --- 価格（numericality, range）のバリデーション ---
-  describe '価格の数値および範囲チェック' do
+  context '価格の数値および範囲チェック' do
     it '価格が300円未満だと登録できない' do
       item.price = 299
       item.valid?
@@ -68,44 +68,39 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  # --- Active Hash/選択肢（other_than: 1）のバリデーション ---
-  describe 'カテゴリおよびその他の選択項目チェック' do
-    it 'category_idが1（---）だと登録できない' do
-      item.category_id = 1
-      item.valid?
-      expect(item.errors.full_messages).to include('Category を選択してください')
-    end
+  it 'category_idが1（---）だと登録できない' do
+    item.category_id = 1
+    item.valid?
+    expect(item.errors.full_messages).to include('Category を選択してください')
+  end
 
-    it 'condition_idが1（---）だと登録できない' do
-      item.condition_id = 1
-      item.valid?
-      expect(item.errors.full_messages).to include('Condition を選択してください')
-    end
+  it 'condition_idが1（---）だと登録できない' do
+    item.condition_id = 1
+    item.valid?
+    expect(item.errors.full_messages).to include('Condition を選択してください')
+  end
 
-    it 'shipping_fee_payer_idが1（---）だと登録できない' do
-      item.shipping_fee_payer_id = 1
-      item.valid?
-      expect(item.errors.full_messages).to include('Shipping fee payer を選択してください')
-    end
+  it 'shipping_fee_payer_idが1（---）だと登録できない' do
+    item.shipping_fee_payer_id = 1
+    item.valid?
+    expect(item.errors.full_messages).to include('Shipping fee payer を選択してください')
+  end
 
-    it 'prefecture_idが1（---）だと登録できない' do
-      item.prefecture_id = 1
-      item.valid?
-      expect(item.errors.full_messages).to include('Prefecture を選択してください')
-    end
+  it 'prefecture_idが1（---）だと登録できない' do
+    item.prefecture_id = 1
+    item.valid?
+    expect(item.errors.full_messages).to include('Prefecture を選択してください')
+  end
 
-    it 'shipping_day_idが1（---）だと登録できない' do
-      item.shipping_day_id = 1
-      item.valid?
-      expect(item.errors.full_messages).to include('Shipping day を選択してください')
-    end
+  it 'shipping_day_idが1（---）だと登録できない' do
+    item.shipping_day_id = 1
+    item.valid?
+    expect(item.errors.full_messages).to include('Shipping day を選択してください')
+  end
 
-    context '出品できないとき' do
-      it 'userが紐付いていなければ登録できない' do
-        item.user = nil
-        item.valid?
-        expect(item.errors.full_messages).to include('User must exist')
-      end
-    end
+  it 'userが紐付いていなければ登録できない' do
+    item.user = nil
+    item.valid?
+    expect(item.errors.full_messages).to include('User must exist')
   end
 end
