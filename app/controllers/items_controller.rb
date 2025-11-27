@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   # before_action :ensure_seller_and_unsold, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.order('created_at DESC')
+    # @items = Item.order('created_at DESC')
   end
 
   def new
@@ -14,7 +14,6 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    # @items = Item.order('created_at DESC')
     if @item.save
       redirect_to root_path
     else
