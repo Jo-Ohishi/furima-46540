@@ -7,11 +7,13 @@ class Item < ApplicationRecord
   belongs_to_active_hash :shipping_day
 
   belongs_to :user
+  belongs_to :category
 
   has_one_attached :image
-  has_one :order
+  # has_one :order
 
   validates :price, presence: true
+  validates :category_id, presence: true
 
   validates :price, numericality: {
     only_integer: true,

@@ -7,20 +7,16 @@
       <%= @item.name %>
     </h2>
     <div class="item-img-content">
-      <% if @item.image.attached? %>
       <%= image_tag @item.image, class:"item-box-img" %>
-      <% end %>
-      <%# 商品が売れている場合は、sold outを表示しましょう %>
       <%# if item.order.present? %>
-      <div class="sold-out">
+      <%# <div class="sold-out">
         <span>Sold Out!!</span>
-      </div>
+      </div> %>
       <%# end %>
-      <%# //商品が売れている場合は、sold outを表示しましょう %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
-        ¥ 999,999,999
+        <%= number_to_currency(@item.price, precision: 0, format: "%u%n", unit: "¥") %>
       </span>
       <span class="item-postage">
         <%= @item.shipping_fee_payer.name %>
@@ -30,9 +26,9 @@
     <%# if @item.order.present? %>
   
      <%# 売り切れの場合は「Sold Out」の表示のみを行い、ボタンは表示しない %>
-     <div class="item-status">
+     <%# <div class="item-status">
       <span class="sold-out-status">SOLD OUT</span>
-     </div>
+     </div> %>
 
     <%# else %>
   
@@ -46,7 +42,7 @@
 
       <% else %>
 
-       <%= link_to "購入画面に進む", item_orders_path(@item) ,class:"item-red-btn"%>
+       <%= link_to "購入画面に進む", "#",class:"item-red-btn"%>
       
       <% end %>
 
@@ -57,9 +53,8 @@
      <% end %>
   
     <%# end %>
-
     <div class="item-explain-box">
-      <span><%= "商品説明" %></span>
+      <span><%= @item.description %></span>
     </div>
     <table class="detail-table">
       <tbody>
@@ -124,9 +119,7 @@
       後ろの商品 ＞
     </a>
   </div>
-  <%# 詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
-  <a href="<%= category_items_path(@item.category) %>" class="another-item"><%= @item.category.name %>をもっと見る</a>
-  <%# //詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
+  <a href="#" class="another-item"><%= @item.category.name %>をもっと見る</a>
 </div>
 
 <%= render "shared/footer" %>

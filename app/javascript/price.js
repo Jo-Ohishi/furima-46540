@@ -26,4 +26,4 @@ const priceCalculation = () => {
 };
 
 window.addEventListener("turbo:load", priceCalculation);
-window.addEventListener("DOMContentLoaded", priceCalculation);
+window.addEventListener("turbo:render", priceCalculation);
