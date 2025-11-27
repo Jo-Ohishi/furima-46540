@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'users/show'
   resources :items, only: [:index, :create, :new, :show, :edit, :update, :destroy]
   resources :users, only: [:show]
+  resources :items do
+   resources :orders, only: [:index, :create]
+  end
     # root to: 'orders#index'
-  resources :orders, only:[:create]
 end
