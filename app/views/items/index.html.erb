@@ -128,7 +128,7 @@
     </div>
     <ul class='item-lists'>
 
-<%# if @items.present? %>
+<% if @items.present? %>
   
   <% @items.each do |item| %>
     <li class='list'>
@@ -160,7 +160,7 @@
     </li>
   <% end %>
 
-<%# else %>
+<% else %>
   
   <li class='list'>
     <%= link_to '#' do %>
@@ -179,7 +179,7 @@
       </div>
     <% end %>
   </li>
-<%# end %>
+<% end %>
 
 
     </ul>
