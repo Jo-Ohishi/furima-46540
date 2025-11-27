@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   # resources :categories do
   #   resources :items, only: [:index, :new, :create]
   # end
-  resources :items, only: [:index, :create, :new, :show]
+  resources :items, only: [:index, :create, :new, :show, :edit, :update ]
   resources :users, only: [:show]
 end
