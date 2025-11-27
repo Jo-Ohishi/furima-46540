@@ -11,12 +11,13 @@ const pay = () => {
   cvcElement.mount('#cvc-form');
   const form = document.getElementById('charge-form')
   form.addEventListener("submit", (e) => {
+    e.preventDefault();
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
       } else {
         const token = response.id;
         const renderDom = document.getElementById("charge-form");
-                const tokenObj = `<input value=${token} name='token' type="hidden">`;
+                const tokenObj = `<input value=${token} name='order_form[token]' type="hidden">`;
         renderDom.insertAdjacentHTML("beforeend", tokenObj);
       }
       numberElement.clear();
@@ -24,7 +25,6 @@ const pay = () => {
       cvcElement.clear();
       document.getElementById("charge-form").submit();
     });
-    e.preventDefault();
   });
 };
 
