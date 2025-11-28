@@ -40,15 +40,15 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:price, :postal_code, :prefecture_id, :city, :street_addresses, :building_name,
-                                  :phone_number).merge(token: params[:token])
+    params.require(:order_form).permit(:token, :postal_code, :prefecture_id, :city, :street_addresses, :building_name,
+                                       :phone_number)
           .merge(item_id: @item.id, user_id: current_user.id)
   end
 
   def pay_item
     Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
-      amount: order_params[:price],
+      amount: @item.price,
       card: order_params[:token],
       currency: 'jpy'
     )

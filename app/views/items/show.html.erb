@@ -8,11 +8,11 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image, class:"item-box-img" %>
-      <%# if item.order.present? %>
-      <%# <div class="sold-out">
+      <%if @item.order.present? %>
+       <div class="sold-out">
         <span>Sold Out!!</span>
-      </div> %>
-      <%# end %>
+      </div> 
+      <% end %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -23,14 +23,14 @@
       </span>
     </div>
 
-    <%# if @item.order.present? %>
+    <% if @item.order.present? %>
   
      <%# 売り切れの場合は「Sold Out」の表示のみを行い、ボタンは表示しない %>
-     <%# <div class="item-status">
+     <div class="item-status">
       <span class="sold-out-status">SOLD OUT</span>
-     </div> %>
+     </div> 
 
-    <%# else %>
+    <% else %>
   
      <% if user_signed_in? %>
     
@@ -52,7 +52,7 @@
 
      <% end %>
   
-    <%# end %>
+    <% end %>
     <div class="item-explain-box">
       <span><%= @item.description %></span>
     </div>
