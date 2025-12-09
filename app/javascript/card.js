@@ -19,6 +19,18 @@ const pay = () => {
   cvcElement.mount('#cvc-form');
 
   const form = document.getElementById('charge-form');
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    // 💡 決済処理を開始する前に無効化する
+    const submitButton = document.getElementById("button-text");
+    if (submitButton) {
+        submitButton.disabled = true; 
+    }
+    
+    // ... payjp.createToken(numberElement).then(...) ...
+  });
   
   form.addEventListener("submit", (e) => {
     e.preventDefault();
