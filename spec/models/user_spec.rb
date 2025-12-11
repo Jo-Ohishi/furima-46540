@@ -124,6 +124,7 @@ RSpec.describe User, type: :model do
         user.valid?
         expect(user.errors.full_messages).to include('Password は英字と数字を両方含む必要があります')
       end
+
       it '姓（全角）に半角英字が含まれていると登録できない' do
         user.last_name = '山田yamada'
         user.valid?

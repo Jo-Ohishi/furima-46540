@@ -136,12 +136,12 @@
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" %>
 
-          <%# if item.order.present? %>
-            <%# <div class='sold-out'>
+          <% if item.order.present? %>
+            <div class='sold-out'>
               <span>Sold Out!!</span>
-            </div> %>
-          <%# end %>
-         
+            </div> 
+          <% end %>
+
 
         </div>
         <div class='item-info'>
@@ -149,7 +149,10 @@
             <%= item.name %>
           </h3>
           <div class='item-price'>
-            <span><%= item.price %>円<br><%= item.shipping_fee_payer.name %></span>
+            <span>
+              <%= number_to_currency(item.price, precision: 0, unit: "¥") %><br>
+              <%= item.shipping_fee_payer.name %>
+            </span>
             <div class='star-btn'>
               <%= image_tag "star.png", class:"star-icon" %>
               <span class='star-count'>0</span>
@@ -158,18 +161,19 @@
         </div>
       <% end %>
     </li>
-  <% end %>
+  <% end %> 
 
-<% else %>
-  
+<% else %> 
+      
   <li class='list'>
-    <%= link_to "#" do %>
+    <%= link_to '#' do %>
       <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
       <div class='item-info'>
         <h3 class='item-name'>
           商品を出品してね！
         </h3>
         <div class='item-price'>
+          <%# 💡 ダミー商品の静的な価格表示 %>
           <span>99999999円<br>(税込み)</span>
           <div class='star-btn'>
             <%= image_tag "star.png", class:"star-icon" %>
@@ -179,8 +183,8 @@
       </div>
     <% end %>
   </li>
-<% end %>
 
+<% end %> 
 
     </ul>
   </div>

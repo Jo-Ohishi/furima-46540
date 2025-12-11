@@ -1,8 +1,9 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :show, :edit, :update, :destroy]
-  before_action :find_item, only: [:show]
+  # before_action :find_item, only: [:show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :ensure_seller_and_unsold, only: [:edit, :update, :destroy]
+  before_action :redirect_if_unauthorized, only: [:edit, :update]
 
   def index
     @items = Item.order('created_at DESC')
@@ -28,11 +29,9 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(item_params)
-      redirect_to item_path(@item)
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    return redirect_to item_path(@item) if @item.update(item_params)
+
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
@@ -69,5 +68,12 @@ class ItemsController < ApplicationController
     # return unless @item.order.present?
 
     # redirect_to root_path
+  end
+
+  def redirect_if_unauthorized
+    redirect_to root_path and return unless @item.user == current_user
+    return if @item.order.present?
+
+    redirect_to root_path and return
   end
 end
