@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   before_action :redirect_if_unauthorized, only: [:edit, :update]
 
   def index
-    @items = Item.order('created_at DESC')
+    @items = Item.all.order('created_at DESC')
   end
 
   def new
@@ -72,7 +72,7 @@ class ItemsController < ApplicationController
 
   def redirect_if_unauthorized
     redirect_to root_path and return unless @item.user == current_user
-    return if @item.order.present?
+    return unless @item.order.present?
 
     redirect_to root_path and return
   end
