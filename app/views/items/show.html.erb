@@ -23,34 +23,23 @@
       </span>
     </div>
 
-    <% if @item.order.present? %>
-     <div class="item-status">
-      <span class="sold-out-status">SOLD OUT</span>
-     </div> 
+    <% unless user_signed_in? %>
+      <p class="login-prompt">購入にはログインが必要です。</p>
+      <% return %>
+    <% end %>
+
+    <% if current_user.id == @item.user_id %>
+  
+      <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
+      <p class="or-text">or</p>
+      <%= link_to "削除", item_path(@item), data: { turbo_method: :delete }, class:"item-destroy" %>
 
     <% else %>
-  
-     <% if user_signed_in? %>
-    
-      <% if current_user.id == @item.user_id %>
 
-       <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
-       <p class="or-text">or</p>
-       <%= link_to "削除", item_path(@item), data: {turbo_method: :delete, }, class:"item-destroy" %>
+      <%= link_to "購入画面に進む", item_orders_path(@item), class:"item-red-btn"%>
 
-      <% else %>
-
-       <%= link_to "購入画面に進む", item_orders_path(@item), class:"item-red-btn"%>
-      
-      <% end %>
-
-     <% else %>
-
-       <p class="login-prompt">購入にはログインが必要です。</p>
-
-     <% end %>
-  
     <% end %>
+
     <div class="item-explain-box">
       <span><%= @item.description %></span>
     </div>
