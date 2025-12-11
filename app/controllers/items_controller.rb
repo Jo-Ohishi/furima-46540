@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   before_action :find_item, only: [:show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :ensure_seller_and_unsold, only: [:edit, :update, :destroy]
+  before_action :redirect_if_unauthorized, only: [:edit, :update]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -67,5 +68,12 @@ class ItemsController < ApplicationController
     # return unless @item.order.present?
 
     # redirect_to root_path
+  end
+
+  def redirect_if_unauthorized
+    redirect_to root_path and return unless @item.user == current_user
+    return unless @item.order.present?
+
+    redirect_to root_path and return
   end
 end
