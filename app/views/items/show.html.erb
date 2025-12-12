@@ -23,6 +23,8 @@
       </span>
     </div>
 
+  <%if !@item.order.present? %>
+
     <% unless user_signed_in? %>
       <p class="login-prompt">購入にはログインが必要です。</p>
       <% return %>
@@ -39,6 +41,8 @@
       <%= link_to "購入画面に進む", item_orders_path(@item), class:"item-red-btn"%>
 
     <% end %>
+
+  <% end %>
 
     <div class="item-explain-box">
       <span><%= @item.description %></span>
